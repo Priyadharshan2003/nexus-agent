@@ -50,7 +50,7 @@ export const metadata: Metadata = {
       { url: "/favicon.svg", type: "image/svg+xml" },
     ],
     apple: [
-      { url: "/apple-icon", sizes: "180x180", type: "image/png" },
+      { url: "/icon.svg", sizes: "180x180", type: "image/svg+xml" },
     ],
     shortcut: "/icon.svg",
   },
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
       "Accelerate SAP S/4HANA & BTP modernization with an autonomous multi-agent swarm: ABAP Cloud refactoring, CAP service generation, and Clean Core governance.",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/icon.svg",
         width: 1200,
         height: 630,
         alt: "Nexus Agent - Autonomous SAP BTP Multi-Agent Orchestrator",
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
     description:
       "Accelerate SAP S/4HANA & BTP modernization with an autonomous multi-agent swarm: ABAP Cloud refactoring, CAP service generation, and Clean Core governance.",
     creator: "@NexusAgent",
-    images: ["/opengraph-image"],
+    images: ["/icon.svg"],
   },
   category: "Enterprise AI Software",
 };
