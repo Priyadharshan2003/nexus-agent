@@ -106,25 +106,51 @@ export function useNexusStore() {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [isCommandOpen, setIsCommandOpen] = useState<boolean>(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
+  const [isSidebarPinned, setIsSidebarPinned] = useState<boolean>(true);
+  const [pinnedWorkflows, setPinnedWorkflows] = useState<string[]>([
+    "wf_ecc_to_s4_migration",
+    "wf_cap_generator_preset"
+  ]);
 
-  // Load initial theme from localStorage
+  // Load initial theme and sidebar state from localStorage
   useEffect(() => {
-    const savedTheme = localStorage.getItem("nexus_theme") as "dark" | "light" | null;
-    const initialTheme = savedTheme || "dark";
-    setTheme(initialTheme);
-    if (initialTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
+    try {
+      const savedTheme = localStorage.getItem("nexus_theme") as "dark" | "light" | null;
+      const initialTheme = savedTheme || "dark";
+      setTheme(initialTheme);
+      if (initialTheme === "dark") {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+      }
+
+      const savedCollapsed = localStorage.getItem("nexus_sidebar_collapsed");
+      if (savedCollapsed !== null) {
+        setIsSidebarCollapsed(savedCollapsed === "true");
+      }
+      const savedPinned = localStorage.getItem("nexus_sidebar_pinned");
+      if (savedPinned !== null) {
+        setIsSidebarPinned(savedPinned === "true");
+      }
+      const savedFavs = localStorage.getItem("nexus_pinned_workflows");
+      if (savedFavs) {
+        setPinnedWorkflows(JSON.parse(savedFavs));
+      }
+    } catch {
+      // Ignore localStorage exceptions
     }
   }, []);
 
   const toggleTheme = useCallback(() => {
     setTheme((prev) => {
       const next = prev === "dark" ? "light" : "dark";
-      localStorage.setItem("nexus_theme", next);
+      try {
+        localStorage.setItem("nexus_theme", next);
+      } catch {}
       if (next === "dark") {
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
@@ -132,6 +158,52 @@ export function useNexusStore() {
         document.documentElement.classList.remove("dark");
         document.documentElement.classList.add("light");
       }
+      return next;
+    });
+  }, []);
+
+  const toggleSidebar = useCallback(() => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("nexus_sidebar_collapsed", String(next));
+      } catch {}
+      return next;
+    });
+  }, []);
+
+  const setSidebarCollapsed = useCallback((collapsed: boolean) => {
+    setIsSidebarCollapsed(collapsed);
+    try {
+      localStorage.setItem("nexus_sidebar_collapsed", String(collapsed));
+    } catch {}
+  }, []);
+
+  const toggleMobileSidebar = useCallback(() => {
+    setIsMobileSidebarOpen((prev) => !prev);
+  }, []);
+
+  const closeMobileSidebar = useCallback(() => {
+    setIsMobileSidebarOpen(false);
+  }, []);
+
+  const toggleSidebarPinned = useCallback(() => {
+    setIsSidebarPinned((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("nexus_sidebar_pinned", String(next));
+      } catch {}
+      return next;
+    });
+  }, []);
+
+  const togglePinWorkflow = useCallback((id: string) => {
+    setPinnedWorkflows((prev) => {
+      const exists = prev.includes(id);
+      const next = exists ? prev.filter((item) => item !== id) : [...prev, id];
+      try {
+        localStorage.setItem("nexus_pinned_workflows", JSON.stringify(next));
+      } catch {}
       return next;
     });
   }, []);
@@ -321,6 +393,18 @@ export function useNexusStore() {
     theme,
     setTheme,
     toggleTheme,
+    isSidebarCollapsed,
+    setIsSidebarCollapsed,
+    toggleSidebar,
+    setSidebarCollapsed,
+    isMobileSidebarOpen,
+    setIsMobileSidebarOpen,
+    toggleMobileSidebar,
+    closeMobileSidebar,
+    isSidebarPinned,
+    toggleSidebarPinned,
+    pinnedWorkflows,
+    togglePinWorkflow,
     stepForward,
     runWorkflowAuto,
     startNewWorkflow,

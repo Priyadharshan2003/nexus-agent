@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Search,
-  Bot,
   GitFork,
   Code2,
   Boxes,
@@ -13,7 +12,6 @@ import {
   ShieldCheck,
   Zap,
   ArrowRight,
-  FileText,
   X
 } from "lucide-react";
 
@@ -112,22 +110,22 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-start justify-center pt-24 px-4 animate-in fade-in duration-150">
-      <div className="w-full max-w-2xl bg-[#0e131f] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 bg-black/60 dark:bg-black/70 backdrop-blur-md flex items-start justify-center pt-24 px-4 animate-in fade-in duration-150">
+      <div className="w-full max-w-2xl bg-white dark:bg-[#0e131f] border border-slate-200 dark:border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col">
         {/* Search input header */}
-        <div className="p-4 border-b border-slate-800 flex items-center gap-3">
-          <Search className="w-5 h-5 text-cyan-400" />
+        <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center gap-3">
+          <Search className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
           <input
             type="text"
             placeholder="Type a command, search SAP Notes, or launch multi-agent workflow..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
-            className="flex-1 bg-transparent text-slate-100 placeholder-slate-500 text-sm focus:outline-none"
+            className="flex-1 bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm focus:outline-none"
           />
           <button
             onClick={onClose}
-            className="p-1 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition-colors"
+            className="p-1 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -135,7 +133,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
         {/* Results List */}
         <div className="max-h-96 overflow-y-auto p-2 space-y-1">
-          <div className="px-3 py-1.5 text-[10px] uppercase font-mono tracking-wider text-slate-500">
+          <div className="px-3 py-1.5 text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400">
             Recommended Enterprise Actions
           </div>
           {filtered.map((item, idx) => {
@@ -144,20 +142,20 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               <button
                 key={idx}
                 onClick={item.action}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-cyan-500/10 hover:border-cyan-500/30 border border-transparent text-left transition-all group"
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-cyan-50 dark:hover:bg-cyan-500/10 hover:border-cyan-200 dark:hover:border-cyan-500/30 border border-transparent text-left transition-all group"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-surface-200 group-hover:bg-cyan-950/60 text-slate-400 group-hover:text-cyan-400 transition-colors">
+                  <div className="p-2 rounded-lg bg-slate-100 dark:bg-surface-200 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-950/60 text-slate-600 dark:text-slate-400 group-hover:text-cyan-700 dark:group-hover:text-cyan-400 transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-semibold text-slate-200 group-hover:text-cyan-300">
+                    <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 group-hover:text-cyan-700 dark:group-hover:text-cyan-300">
                       {item.title}
                     </p>
                     <span className="text-[10px] font-mono text-slate-500">{item.category}</span>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-cyan-400 transition-colors" />
+                <ArrowRight className="w-4 h-4 text-slate-400 dark:text-slate-600 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors" />
               </button>
             );
           })}
@@ -169,11 +167,11 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
         </div>
 
         {/* Keyboard shortcut footer */}
-        <div className="p-3 bg-[#0a0d14] border-t border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500">
+        <div className="p-3 bg-slate-50 dark:bg-[#0a0d14] border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500">
           <div className="flex items-center gap-2">
-            <span>Press <kbd className="px-1 py-0.5 rounded bg-slate-800 text-slate-300">ESC</kbd> to exit</span>
+            <span>Press <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700">ESC</kbd> to exit</span>
           </div>
-          <div className="flex items-center gap-1 text-cyan-400">
+          <div className="flex items-center gap-1 text-cyan-600 dark:text-cyan-400 font-semibold">
             <Zap className="w-3 h-3" />
             <span>SAP Autonomous Multi-Agent Engine</span>
           </div>

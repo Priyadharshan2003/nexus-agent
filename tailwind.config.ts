@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#080b11",
+        background: "var(--bg-main, #080b11)",
         surface: {
-          50: "#161d2a",
-          100: "#131924",
-          200: "#0f141f",
-          300: "#0b0f17",
-          400: "#080b11",
+          50: "rgb(var(--surface-50-rgb, 22 29 42) / <alpha-value>)",
+          100: "rgb(var(--surface-100-rgb, 19 25 36) / <alpha-value>)",
+          200: "rgb(var(--surface-200-rgb, 15 20 31) / <alpha-value>)",
+          300: "rgb(var(--surface-300-rgb, 11 15 23) / <alpha-value>)",
+          400: "rgb(var(--surface-400-rgb, 8 11 17) / <alpha-value>)",
         },
         brand: {
           50: "#ecfeff",
@@ -39,9 +39,9 @@ const config: Config = {
           purple: "#8b5cf6",
           rose: "#f43f5e",
         },
-        border: "rgba(255, 255, 255, 0.08)",
-        card: "rgba(15, 20, 31, 0.75)",
-        glass: "rgba(255, 255, 255, 0.03)",
+        border: "var(--border-main, rgba(255, 255, 255, 0.08))",
+        card: "var(--bg-card, rgba(15, 20, 31, 0.75))",
+        glass: "var(--glass-bg, rgba(255, 255, 255, 0.03))",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

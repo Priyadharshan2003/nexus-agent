@@ -10,7 +10,7 @@
     --font-mono: 'JetBrains Mono', monospace;
   }
 
-  /* Dark theme defaults */
+  /* Dark theme defaults (Cyber Space SAP) */
   html.dark {
     --bg-main: #07090e;
     --bg-surface: #0e131f;
@@ -19,17 +19,29 @@
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
+    --surface-50-rgb: 22 29 42;
+    --surface-100-rgb: 19 25 36;
+    --surface-200-rgb: 15 20 31;
+    --surface-300-rgb: 11 15 23;
+    --surface-400-rgb: 8 11 17;
+    --glass-bg: rgba(255, 255, 255, 0.03);
   }
 
   /* Light theme (SAP Fiori Horizon Light) */
   html.light {
-    --bg-main: #f1f5f9;
+    --bg-main: #f4f6fa;
     --bg-surface: #ffffff;
-    --bg-card: rgba(255, 255, 255, 0.9);
-    --border-main: rgba(0, 0, 0, 0.08);
+    --bg-card: rgba(255, 255, 255, 0.95);
+    --border-main: rgba(0, 0, 0, 0.09);
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --text-muted: #64748b;
+    --surface-50-rgb: 248 250 252;
+    --surface-100-rgb: 241 245 249;
+    --surface-200-rgb: 226 232 240;
+    --surface-300-rgb: 203 213 225;
+    --surface-400-rgb: 148 163 184;
+    --glass-bg: rgba(0, 0, 0, 0.02);
   }
 
   body {
@@ -38,11 +50,15 @@
   }
 
   html.dark body {
-    @apply bg-[#07090e] text-slate-100 selection:bg-cyan-500/20 selection:text-cyan-300;
+    background-color: #07090e;
+    color: #f8fafc;
+    @apply selection:bg-cyan-500/20 selection:text-cyan-300;
   }
 
   html.light body {
-    @apply bg-[#f4f6fa] text-slate-900 selection:bg-blue-500/20 selection:text-blue-700;
+    background-color: #f4f6fa;
+    color: #0f172a;
+    @apply selection:bg-blue-500/20 selection:text-blue-700;
   }
 
   /* Custom subtle scrollbars */
@@ -90,50 +106,45 @@ html.light .glass-panel {
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
 
-html.dark .glass-panel-hover:hover {
-  background: rgba(19, 26, 38, 0.85);
-  border-color: rgba(6, 182, 212, 0.3);
-  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.5), 0 0 15px -2px rgba(6, 182, 212, 0.15);
+/* SAP Logo Font */
+.sap-logo-text {
+  font-family: '72', 'Plus Jakarta Sans', system-ui, sans-serif;
+  letter-spacing: -0.04em;
 }
 
-html.light .glass-panel-hover:hover {
-  background: rgba(255, 255, 255, 1);
-  border-color: rgba(2, 132, 199, 0.4);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
-}
-
-/* Grids */
+/* Grid Background */
 html.dark .grid-bg {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
 html.light .grid-bg {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
-/* Radial glows */
+/* Radial Glow Helper */
 html.dark .radial-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
 }
 
 html.light .radial-glow {
-  background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(0, 112, 242, 0.06) 0%, transparent 70%);
 }
 
-/* SAP Logo Font & Typography Class */
-.sap-font {
-  font-family: var(--font-sap);
-  letter-spacing: -0.015em;
+/* Glow effects */
+.shadow-glow {
+  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.3);
 }
 
-.sap-logo-text {
-  font-family: var(--font-sap);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+.shadow-glow-purple {
+  box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.3);
+}
+
+.shadow-glow-emerald {
+  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.3);
 }
