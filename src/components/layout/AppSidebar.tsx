@@ -22,9 +22,11 @@ import {
   Star,
   Activity,
   ChevronRight,
-  ExternalLink
+  ExternalLink,
+  Info
 } from "lucide-react";
 import { useNexusStore } from "@/lib/store/useNexusStore";
+import { AboutModal } from "./AboutModal";
 
 interface SidebarProps {
   pendingApprovalsCount?: number;
@@ -43,6 +45,8 @@ export const AppSidebar: React.FC<SidebarProps> = ({ pendingApprovalsCount = 1 }
     togglePinWorkflow,
     agents
   } = useNexusStore();
+
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 
   const navItems = [
     {
@@ -121,6 +125,12 @@ export const AppSidebar: React.FC<SidebarProps> = ({ pendingApprovalsCount = 1 }
       href: "/settings",
       icon: Settings,
       shortcut: "⌘0",
+      group: "System"
+    },
+    {
+      label: "About",
+      href: "/about",
+      icon: Info,
       group: "System"
     }
   ];
@@ -253,7 +263,35 @@ export const AppSidebar: React.FC<SidebarProps> = ({ pendingApprovalsCount = 1 }
 
             return (
               <div key={item.href} className="relative group">
-                <Link
+                {item.label === "About" ? (
+                  <button
+                    onClick={() => {
+                      if (isMobileSidebarOpen) closeMobileSidebar();
+                      setIsAboutModalOpen(true);
+                    }}
+                    className={`flex items-center w-full rounded-xl text-xs font-medium transition-all ${
+                      isSidebarCollapsed
+                        ? "justify-center w-10 h-10 mx-auto"
+                        : "justify-between px-3 py-2"
+                    } ${
+                      isActive
+                        ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-cyan-950/40 dark:to-blue-950/30 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-cyan-500/40 font-bold shadow-sm"
+                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800/60 border border-transparent"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Icon
+                        className={`w-4 h-4 flex-shrink-0 transition-colors ${
+                          isActive
+                            ? "text-blue-600 dark:text-cyan-400"
+                            : "text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200"
+                        }`}
+                      />
+                      {!isSidebarCollapsed && <span className="truncate">{item.label}</span>}
+                    </div>
+                  </button>
+                ) : (
+                  <Link
                   href={item.href}
                   onClick={closeMobileSidebar}
                   className={`flex items-center rounded-xl text-xs font-medium transition-all ${
@@ -298,7 +336,8 @@ export const AppSidebar: React.FC<SidebarProps> = ({ pendingApprovalsCount = 1 }
                       ) : null}
                     </div>
                   )}
-                </Link>
+                  </Link>
+                )}
 
                 {/* Rich Floating Tooltip in Collapsed State */}
                 {isSidebarCollapsed && (
@@ -421,6 +460,8 @@ export const AppSidebar: React.FC<SidebarProps> = ({ pendingApprovalsCount = 1 }
           )}
         </div>
       </aside>
+      
+      <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />
     </>
   );
 };
